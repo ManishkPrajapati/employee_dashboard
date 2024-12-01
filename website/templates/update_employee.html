@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Update Employee{% endblock %}
+
+{% block content %}
+<h1 align="center">Update Employee</h1>
+
+<div class="container">
+  <form method="POST">
+    <div class="form-group">
+      <label>Unique ID:</label>
+      <input type="text" class="form-control" value="{{ employee.unique_id }}" disabled>
+    </div>
+    <div class="form-group">
+      <label>Name:</label>
+      <input type="text" class="form-control" value="{{ employee.name }}" disabled>
+    </div>
+    <div class="form-group">
+      <label>Email:</label>
+      <input type="email" class="form-control" value="{{ employee.email }}" name="email">
+    </div>
+
+    <div class="form-group">
+      <label for="departments">Departments (Max 5):</label>
+      <select id="departments" class="form-control" name="departments" multiple>
+        {% for dept in all_departments %}
+        <option value="{{ dept }}" {% if dept in employee.departments %}selected{% endif %}>{{ dept }}</option>
+        {% endfor %}
+      </select>
+      <small class="form-text text-muted">Hold CTRL to select multiple departments. Max 5 departments.</small>
+    </div>
+
+    <button type="submit" class="btn btn-success">Update</button>
+    <a href="/" class="btn btn-secondary">Cancel</a>
+  </form>
+</div>
+
+<script>
+  document.getElementById('departments').addEventListener('change', function () {
+    const selected = Array.from(this.selectedOptions).length;
+    if (selected > 5) {
+      alert('You can select a maximum of 5 departments.');
+      this.value = Array.from(this.selectedOptions).slice(0, 5).map(option => option.value); 
+    }
+  });
+</script>
+{% endblock %}

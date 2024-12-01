@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<h1 align="center">Employee Dashboard</h1>
+
+<h2>Employee List</h2>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>S.No.</th>
+      <th>Employee ID</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Departments</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for employee in emp %}
+    <tr>
+      <td>{{ loop.index }}</td>
+      <td>{{ employee.unique_id }}</td>
+      <td>{{ employee.name }}</td>
+      <td>{{ employee.email }}</td>
+      <td>{{ employee.departments | join(', ') }}</td>
+      <td>
+        <button
+          class="btn btn-warning btn-sm"
+          onclick="updateEmployee('{{ employee.unique_id }}')">
+          Update
+        </button>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<div align="center">
+  <button class="btn btn-primary" onclick="window.location.href='/departments'">
+    Manage Departments
+  </button>
+</div>
+
+<script>
+  function updateEmployee(employeeId) {
+    window.location.href = `/update_employee/${employeeId}`;
+  }
+</script>
+{% endblock %}
