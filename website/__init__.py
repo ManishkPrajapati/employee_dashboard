@@ -12,9 +12,11 @@ DB_NAME = "database.db"
 
 employees = None
 department = None
+groups = None
+user_unique_groups = None
 
 def create_app():
-    global employees, department
+    global employees, department, user_unique_groups, groups
     app = Flask(__name__)
     app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'default-secret-key')
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
@@ -27,6 +29,8 @@ def create_app():
     groups = d_b.groups
     department = d_b.department
     employees = d_b.employee
+    groups = d_b.groups
+    user_unique_groups = d_b.user_unique_groups
 
     from .views import views
     from .auth import auth
@@ -34,7 +38,7 @@ def create_app():
     app.register_blueprint(views, url_prefix='/')
     app.register_blueprint(auth, url_prefix='/')
 
-    from .models import User, Note
+    from .models import User
 
     with app.app_context():
         db.create_all()
@@ -56,8 +60,5 @@ def create_database(app):
         db.create_all(app=app)
         print('Created Database!')
 
-# def create_database(app):
-#     if not path.exists('website/' + DB_NAME):
-#         with app.app_context():
-#             db.create_all()
-#         print('Created Database!')
+
+

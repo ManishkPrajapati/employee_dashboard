@@ -2,15 +2,16 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
-TOKEN=os.getenv('TOKEN')
-PHONE_ID=os.getenv('PHONE_ID')
-MONGO_URI=os.getenv('MONGO_URI')
-FB_TOKEN = os.getenv('FB_TOKEN')
+TOKEN = os.getenv('TOKEN')
+PHONE_NUMBER_ID = os.getenv('PHONE_NUMBER_ID')
 VERSION = os.getenv('VERSION')
 
-FACEBOOK_URL = f"https://crm.notbot.in/api/meta/{VERSION}/{PHONE_ID}/messages"
+
+MONGO_URI=os.getenv('MONGO_URI')
+
+FACEBOOK_URL = f"https://crm.notbot.in/api/meta/{VERSION}/{PHONE_NUMBER_ID}/messages"
 
 FACEBOOK_HEADERS = {
                         'Content-Type': 'application/json',
-                        'Authorization': f'Bearer {FB_TOKEN}'
+                        'Authorization': f'Bearer {TOKEN}'
                         }
